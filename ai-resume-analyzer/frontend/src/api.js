@@ -1,7 +1,7 @@
 import axios from 'axios'
 
 // Default to Render backend URL for production, VITE_API_URL can override
-const API_BASE_URL = import.meta.env.VITE_API_URL || 'https://ai-resume-analyzer-api.onrender.com'
+const API_BASE_URL = import.meta.env.VITE_API_URL || 'https://ai-resume-analyzer-api-w7pk.onrender.com'
 
 const api = axios.create({
   baseURL: API_BASE_URL,
