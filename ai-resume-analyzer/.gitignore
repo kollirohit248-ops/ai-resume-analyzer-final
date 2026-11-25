@@ -1,0 +1,74 @@
+# Node.js
+node_modules/
+npm-debug.log
+package-lock.json
+yarn.lock
+.pnpm-debug.log
+
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+env/
+venv/
+.venv/
+pip-log.txt
+pip-delete-this-directory.txt
+.eggs/
+*.egg-info/
+dist/
+build/
+
+# Virtual environments
+.venv/
+venv/
+env/
+
+# IDE
+.idea/
+.vscode/
+*.swp
+*.swo
+*~
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Environment variables
+.env
+.env.local
+.env.*.local
+
+# Build outputs
+/frontend/dist/
+/frontend/build/
+
+# Temporary files
+*.tmp
+*.temp
+*.log
+
+# Test coverage
+coverage/
+*.cover
+
+# Cache
+.cache/
+.parcel-cache/
+
+# PDF and other binary files (optional - keep resume as sample)
+# *.pdf
+# *.docx
+
+# Deployment
+# Serverless function packages
+.serverless/
+
+# Docker
+docker-compose.override.yml
+
+# Manual files that shouldn't be committed
+.Rohith_Resume.pdf

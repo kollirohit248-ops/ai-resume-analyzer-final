@@ -1,0 +1,20 @@
+# Render.com deployment configuration
+# AI Resume Analyzer - Backend API
+services:
+  - type: web
+    name: ai-resume-analyzer-api
+    env: python
+    buildCommand: cd backend && pip install -r requirements.txt
+    startCommand: uvicorn main:app --host 0.0.0.0 --port $PORT
+    envVars:
+      - key: PYTHON_VERSION
+        value: "3.11"
+    plan: free
+    branch: main
+
+# Note: Frontend should be deployed separately or using:
+# - Vercel for static React apps
+# - Render Static Site for the built frontend
+#
+# For combined deployment, the frontend can be built and deployed as a separate service
+# pointing to the API at VITE_API_URL=https://ai-resume-analyzer-api.onrender.com
