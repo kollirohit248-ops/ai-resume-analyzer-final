@@ -3,9 +3,9 @@ AI Resume Analyzer - Backend API
 FastAPI backend for analyzing resumes and providing skill gap analysis
 """
 
-from fastapi import FastAPI, UploadFile, File, HTTPException
+from fastapi import FastAPI, UploadFile, File, HTTPException, Form
 from fastapi.middleware.cors import CORSMiddleware
-from pydantic import BaseModel, Form
+from pydantic import BaseModel
 from typing import List, Optional, Dict, Any
 import pdfplumber
 import docx
@@ -373,9 +373,9 @@ async def get_job_titles():
 
 @app.post("/analyze")
 async def analyze_resume(
-    job_title: str = "general-analysis",
+    job_title: str = Form("general-analysis"),
     file: UploadFile = File(...),
-    experience_level: Optional[str] = None
+    experience_level: Optional[str] = Form(None)
 ):
     """
     Analyze a resume against a job description
@@ -483,7 +483,7 @@ async def analyze_with_custom_jd(
     job_title: str = Form("general-analysis"),
     job_description: str = Form(""),
     file: UploadFile = File(...),
-    experience_level: Optional[str] = None
+    experience_level: Optional[str] = Form(None)
 ):
     """
     Analyze a resume against a custom job description
@@ -495,6 +495,10 @@ async def analyze_with_custom_jd(
     - experience_level: Optional - junior, mid, or senior
     """
     print(f"[ANALYZE-CUSTOM] Received /analyze-custom request - job_title: {job_title}")
+    print(f"[ANALYZE-CUSTOM] job_description length: {len(job_description) if job_description else 0}")
+    if job_description:
+        print(f"[ANALYZE-CUSTOM] job_description preview: {job_description[:100]}...")
+    print(f"[ANALYZE-CUSTOM] experience_level: {experience_level}")
 
     # Read file content
     try:
