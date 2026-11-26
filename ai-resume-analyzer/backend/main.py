@@ -5,7 +5,7 @@ FastAPI backend for analyzing resumes and providing skill gap analysis
 
 from fastapi import FastAPI, UploadFile, File, HTTPException
 from fastapi.middleware.cors import CORSMiddleware
-from pydantic import BaseModel
+from pydantic import BaseModel, Form
 from typing import List, Optional, Dict, Any
 import pdfplumber
 import docx
@@ -118,13 +118,21 @@ JOB_DESCRIPTIONS = {
 }
 
 # General job description for analysis when no specific role is selected
-GENERAL_JOB_DESCRIPTION = """General Professional Position - Requirements:
-- Core technical skills relevant to the role
-- Strong problem-solving abilities
-- Communication and collaboration skills
-- Experience with relevant tools and technologies
-- Relevant certifications or education
-- Project management and organizational abilities"""
+GENERAL_JOB_DESCRIPTION = """General Software Developer Position - Requirements:
+- Python, JavaScript, TypeScript, Java, C#, Go
+- React, Vue.js, Angular, Svelte, Next.js
+- Node.js, Express, Django, Flask, FastAPI
+- HTML, CSS, Sass, Less, Tailwind CSS, Bootstrap
+- SQL, PostgreSQL, MySQL, MongoDB, Redis, SQLite
+- Git, GitHub, GitLab, Linux, Windows, MacOS
+- REST API, GraphQL, WebSocket, gRPC
+- Docker, Kubernetes, AWS, Azure, GCP
+- Testing, TDD, CI/CD, DevOps
+- Machine Learning, Deep Learning, AI, NLP
+- Data Science, Big Data, Spark, Hadoop
+- Security, Authentication, Authorization, OAuth, JWT
+- Agile, Scrum, Kanban, Project Management, Jira
+- Problem solving, Communication, Leadership"""
 
 # Job descriptions for the specific role
 JOB_LEVEL_DESCRIPTIONS = {
@@ -472,8 +480,8 @@ async def analyze_resume(
 
 @app.post("/analyze-custom")
 async def analyze_with_custom_jd(
-    job_title: str = "general-analysis",
-    job_description: str = "",
+    job_title: str = Form("general-analysis"),
+    job_description: str = Form(""),
     file: UploadFile = File(...),
     experience_level: Optional[str] = None
 ):
@@ -524,9 +532,9 @@ async def analyze_with_custom_jd(
 
     # Parse resume and custom job description
     resume_data = parse_resume(text)
-    # Use general description if no job description provided
+    # Use fullstack developer description if no job description provided
     if not job_description:
-        job_description = GENERAL_JOB_DESCRIPTION
+        job_description = JOB_DESCRIPTIONS.get("fullstack-developer", GENERAL_JOB_DESCRIPTION)
     job_data = parse_job_description(job_description)
 
     # Use provided experience level or detect from resume
